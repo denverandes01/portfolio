@@ -3,365 +3,250 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Denver C. Andes — Virtual Assistant</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<title>Denver Andes — Virtual Assistant</title>
 <style>
-  :root {
-    --navy:   #0f2137;
-    --blue:   #1a5e8a;
-    --sky:    #2e9cca;
-    --teal:   #0d9488;
-    --mint:   #ccfbf1;
-    --cream:  #f8f5f0;
-    --sand:   #e8e2d9;
-    --text:   #1c2b3a;
-    --muted:  #637082;
-    --white:  #ffffff;
-  }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #0F1923;
+    --navy2:  #1A2B3C;
+    --gold:   #C9A84C;
+    --green:  #2D6A4F;
+    --slate:  #4A5568;
+    --light:  #FAFAF8;
+    --white:  #FFFFFF;
+    --muted:  #718096;
+    --border: #E2E8F0;
+    --card:   #F7F8FA;
+  }
 
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
-    color: var(--text);
-    overflow-x: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--light);
+    color: var(--navy);
+    line-height: 1.6;
   }
 
   /* ── NAV ── */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(15,25,35,0.97);
+    backdrop-filter: blur(8px);
     display: flex; align-items: center; justify-content: space-between;
-    padding: 1.1rem 3rem;
-    background: rgba(15,33,55,0.96);
-    backdrop-filter: blur(10px);
+    padding: 0 2rem; height: 60px;
   }
-  .nav-logo {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.2rem; color: var(--white); letter-spacing: .02em;
-  }
-  .nav-logo span { color: var(--sky); }
+  .nav-logo { color: var(--gold); font-weight: 700; font-size: 1rem; letter-spacing: .05em; text-decoration: none; }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a {
-    color: rgba(255,255,255,.7); text-decoration: none;
-    font-size: .85rem; font-weight: 500; letter-spacing: .06em;
-    text-transform: uppercase; transition: color .2s;
-  }
-  .nav-links a:hover { color: var(--sky); }
+  .nav-links a { color: #CBD5E0; text-decoration: none; font-size: .875rem; transition: color .2s; }
+  .nav-links a:hover { color: var(--gold); }
 
   /* ── HERO ── */
-  #hero {
+  .hero {
     min-height: 100vh;
     background: var(--navy);
-    display: grid; grid-template-columns: 1fr 1fr;
-    position: relative; overflow: hidden;
-    padding-top: 70px;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
   }
-  .hero-bg {
-    position: absolute; inset: 0; pointer-events: none;
-    background:
-      radial-gradient(ellipse 60% 70% at 70% 50%, rgba(46,156,202,.12) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 50% at 20% 80%, rgba(13,148,136,.1) 0%, transparent 60%);
+  .hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 60% 40%, rgba(201,168,76,.08) 0%, transparent 65%),
+                radial-gradient(ellipse at 20% 80%, rgba(45,106,79,.07) 0%, transparent 55%);
   }
-  .hero-grid {
-    position: absolute; inset: 0; pointer-events: none;
-    background-image: linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
-    background-size: 60px 60px;
+  .hero-inner { position: relative; max-width: 760px; }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(201,168,76,.12);
+    border: 1px solid rgba(201,168,76,.3);
+    color: var(--gold);
+    font-size: .75rem; letter-spacing: .12em; text-transform: uppercase;
+    padding: .35rem 1rem; border-radius: 99px; margin-bottom: 1.5rem;
   }
-  .hero-left {
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 5rem 3rem 5rem 5rem; position: relative; z-index: 2;
+  .hero h1 {
+    font-family: Georgia, serif;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    color: var(--white); line-height: 1.15; margin-bottom: 1.25rem;
   }
-  .hero-eyebrow {
-    font-size: .78rem; font-weight: 600; letter-spacing: .18em;
-    text-transform: uppercase; color: var(--sky);
-    margin-bottom: 1.2rem;
-    display: flex; align-items: center; gap: .6rem;
+  .hero h1 em { color: var(--gold); font-style: normal; }
+  .hero p {
+    font-size: 1.1rem; color: #A0AEC0; max-width: 580px; margin: 0 auto 2.5rem;
   }
-  .hero-eyebrow::before {
-    content: ''; display: block; width: 32px; height: 2px; background: var(--sky);
+  .hero-cta {
+    display: inline-flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
   }
-  .hero-name {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(2.8rem, 5vw, 4.2rem);
-    color: var(--white); line-height: 1.1; margin-bottom: .5rem;
-  }
-  .hero-name em { color: var(--sky); font-style: italic; }
-  .hero-title {
-    font-size: 1.05rem; color: rgba(255,255,255,.6);
-    font-weight: 300; margin-bottom: 2rem; letter-spacing: .02em;
-  }
-  .hero-title strong { color: rgba(255,255,255,.9); font-weight: 500; }
-  .hero-badges { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: 2.5rem; }
-  .badge {
-    padding: .35rem .9rem; border-radius: 20px; font-size: .78rem;
-    font-weight: 500; letter-spacing: .03em;
-  }
-  .badge-blue  { background: rgba(46,156,202,.18); color: #7dd3f5; border: 1px solid rgba(46,156,202,.3); }
-  .badge-teal  { background: rgba(13,148,136,.18);  color: #5eead4; border: 1px solid rgba(13,148,136,.3); }
-  .badge-white { background: rgba(255,255,255,.08); color: rgba(255,255,255,.7); border: 1px solid rgba(255,255,255,.15); }
-  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
   .btn-primary {
-    padding: .85rem 2rem; border-radius: 4px;
-    background: var(--sky); color: var(--white);
-    font-weight: 600; font-size: .9rem; text-decoration: none;
-    transition: background .2s, transform .15s;
-    letter-spacing: .03em;
+    background: var(--gold); color: var(--navy);
+    font-weight: 700; font-size: .9rem; letter-spacing: .04em;
+    padding: .8rem 2rem; border-radius: 6px; text-decoration: none;
+    transition: opacity .2s;
   }
-  .btn-primary:hover { background: #27b0e0; transform: translateY(-1px); }
+  .btn-primary:hover { opacity: .85; }
   .btn-outline {
-    padding: .85rem 2rem; border-radius: 4px;
-    border: 1.5px solid rgba(255,255,255,.25); color: rgba(255,255,255,.85);
-    font-weight: 500; font-size: .9rem; text-decoration: none;
+    border: 1px solid rgba(255,255,255,.25); color: #E2E8F0;
+    font-size: .9rem; padding: .8rem 2rem; border-radius: 6px; text-decoration: none;
     transition: border-color .2s, color .2s;
   }
-  .btn-outline:hover { border-color: var(--sky); color: var(--sky); }
-
-  .hero-right {
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 5rem 5rem 5rem 3rem; position: relative; z-index: 2;
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .hero-stats {
+    display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap;
+    margin-top: 3.5rem; padding-top: 2.5rem;
+    border-top: 1px solid rgba(255,255,255,.08);
   }
-  .contact-card {
-    background: rgba(255,255,255,.05);
-    border: 1px solid rgba(255,255,255,.1);
-    border-radius: 12px; padding: 2rem;
-    backdrop-filter: blur(10px);
-  }
-  .contact-card h3 {
-    font-size: .75rem; letter-spacing: .14em; text-transform: uppercase;
-    color: var(--sky); margin-bottom: 1.4rem; font-weight: 600;
-  }
-  .contact-item {
-    display: flex; align-items: center; gap: 1rem;
-    padding: .75rem 0; border-bottom: 1px solid rgba(255,255,255,.06);
-  }
-  .contact-item:last-child { border-bottom: none; }
-  .contact-icon {
-    width: 36px; height: 36px; border-radius: 8px;
-    background: rgba(46,156,202,.15); display: flex;
-    align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0;
-  }
-  .contact-label { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
-  .contact-value { font-size: .9rem; color: rgba(255,255,255,.85); font-weight: 500; }
-  .contact-value a { color: var(--sky); text-decoration: none; }
-
-  .stats-row {
-    display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: 1.5rem;
-  }
-  .stat {
-    background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
-    border-radius: 8px; padding: 1rem; text-align: center;
-  }
-  .stat-num {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.8rem; color: var(--sky); line-height: 1;
-  }
-  .stat-label { font-size: .72rem; color: var(--muted); margin-top: .3rem; letter-spacing: .04em; }
+  .stat-item { text-align: center; }
+  .stat-num { font-family: Georgia, serif; font-size: 2rem; color: var(--gold); font-weight: 700; }
+  .stat-lbl { font-size: .78rem; color: #718096; letter-spacing: .06em; text-transform: uppercase; margin-top: .2rem; }
 
   /* ── SECTIONS ── */
-  section { padding: 5rem 0; }
-  .container { max-width: 1100px; margin: 0 auto; padding: 0 2.5rem; }
-
+  section { padding: 5rem 2rem; }
+  .container { max-width: 1020px; margin: 0 auto; }
   .section-label {
-    font-size: .75rem; font-weight: 600; letter-spacing: .18em;
-    text-transform: uppercase; color: var(--sky); margin-bottom: .6rem;
-    display: flex; align-items: center; gap: .6rem;
-  }
-  .section-label::before { content:''; display:block; width:24px; height:2px; background:var(--sky); }
-  .section-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(1.8rem, 3vw, 2.4rem); color: var(--navy); margin-bottom: 2.5rem;
-  }
-  .section-title span { color: var(--teal); }
-
-  /* ── ABOUT ── */
-  #about { background: var(--white); }
-  .about-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 4rem; align-items: start; }
-  .about-aside {
-    background: var(--navy); border-radius: 12px; padding: 2rem; color: white;
-  }
-  .about-aside h4 {
     font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
-    color: var(--sky); margin-bottom: 1rem;
+    color: var(--gold); font-weight: 600; margin-bottom: .6rem;
   }
-  .about-highlight {
-    display: flex; gap: .8rem; align-items: flex-start; padding: .8rem 0;
-    border-bottom: 1px solid rgba(255,255,255,.07);
+  .section-title {
+    font-family: Georgia, serif; font-size: clamp(1.6rem, 4vw, 2.4rem);
+    color: var(--navy); line-height: 1.2; margin-bottom: 1rem;
   }
-  .about-highlight:last-child { border-bottom: none; }
-  .ah-icon { font-size: 1.3rem; line-height: 1; margin-top: .1rem; }
-  .ah-title { font-size: .85rem; font-weight: 600; color: white; margin-bottom: .2rem; }
-  .ah-desc { font-size: .78rem; color: rgba(255,255,255,.55); line-height: 1.5; }
-  .about-text p {
-    font-size: 1rem; line-height: 1.8; color: var(--muted); margin-bottom: 1.2rem;
-  }
-  .about-text p strong { color: var(--text); }
+  .section-sub { font-size: 1rem; color: var(--slate); max-width: 560px; }
 
-  /* ── SERVICES ── */
-  #services { background: var(--cream); }
-  .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  .service-card {
-    background: var(--white); border-radius: 12px; overflow: hidden;
-    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  /* ── PAIN SECTION ── */
+  .pain { background: #F0F2F5; }
+  .pain-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem; margin-top: 3rem;
+  }
+  .pain-card {
+    background: var(--white); border-radius: 10px;
+    padding: 1.5rem; border-left: 3px solid #E53E3E;
+  }
+  .pain-icon { font-size: 1.6rem; margin-bottom: .75rem; }
+  .pain-card h3 { font-size: .95rem; font-weight: 700; color: var(--navy); margin-bottom: .4rem; }
+  .pain-card p { font-size: .85rem; color: var(--slate); line-height: 1.55; }
+
+  /* ── IMPACT SECTION ── */
+  .impact { background: var(--white); }
+  .impact-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem; margin-top: 3rem;
+  }
+  .impact-card {
+    border-radius: 12px; overflow: hidden;
+    border: 1px solid var(--border);
     transition: transform .2s, box-shadow .2s;
   }
-  .service-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,.1); }
-  .service-card-header {
-    padding: 1.4rem 1.8rem;
-    display: flex; align-items: center; gap: 1rem;
+  .impact-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.08); }
+  .impact-top {
+    background: var(--navy); padding: 1.4rem 1.5rem;
+    display: flex; align-items: flex-start; gap: .75rem;
   }
-  .service-card-header.blue { background: var(--navy); }
-  .service-card-header.teal { background: var(--teal); }
-  .service-icon { font-size: 1.5rem; }
-  .service-card-title { font-size: 1rem; font-weight: 600; color: white; }
-  .service-card-sub { font-size: .75rem; color: rgba(255,255,255,.6); margin-top: .15rem; }
-  .service-list { padding: 1.4rem 1.8rem; list-style: none; }
-  .service-list li {
-    padding: .5rem 0; font-size: .88rem; color: var(--muted);
-    border-bottom: 1px solid var(--sand);
-    display: flex; align-items: center; gap: .7rem;
+  .impact-emoji { font-size: 1.5rem; flex-shrink: 0; margin-top: .1rem; }
+  .impact-top h3 { font-size: .9rem; font-weight: 700; color: var(--gold); margin-bottom: .25rem; }
+  .impact-top p { font-size: .82rem; color: #A0AEC0; line-height: 1.5; }
+  .impact-bottom { background: var(--card); padding: 1.2rem 1.5rem; }
+  .impact-bottom .result-label {
+    font-size: .68rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--green); font-weight: 700; margin-bottom: .4rem;
   }
-  .service-list li:last-child { border-bottom: none; }
-  .service-list li::before {
-    content: ''; display: block; width: 6px; height: 6px; border-radius: 50%;
-    background: var(--sky); flex-shrink: 0;
-  }
+  .impact-bottom p { font-size: .85rem; color: var(--slate); line-height: 1.5; }
 
-  /* ── TOOLS ── */
-  #tools { background: var(--white); }
-  .tools-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+  /* ── SPECIALTY SECTION ── */
+  .specialty { background: var(--navy); }
+  .specialty .section-title { color: var(--white); }
+  .specialty .section-sub { color: #A0AEC0; }
+  .specialty-badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: rgba(201,168,76,.1); border: 1px solid rgba(201,168,76,.25);
+    color: var(--gold); font-size: .8rem; padding: .4rem .9rem; border-radius: 99px;
+    margin-bottom: 2rem;
   }
-  .tool-chip {
-    background: var(--cream); border: 1px solid var(--sand);
-    border-radius: 8px; padding: 1rem;
-    text-align: center; font-size: .85rem; font-weight: 500; color: var(--text);
-    transition: all .2s;
+  .spec-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem; margin-top: 2.5rem;
   }
-  .tool-chip:hover {
-    background: var(--navy); color: white; border-color: var(--navy);
-    transform: translateY(-2px);
+  .spec-card {
+    background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px; padding: 1.4rem;
+    transition: background .2s;
   }
-  .tool-chip .tool-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--sky); margin: 0 auto .5rem;
-  }
+  .spec-card:hover { background: rgba(255,255,255,.07); }
+  .spec-card h3 { font-size: .9rem; color: var(--gold); font-weight: 700; margin-bottom: .5rem; }
+  .spec-card p { font-size: .82rem; color: #A0AEC0; line-height: 1.55; }
 
-  /* ── EXPERIENCE ── */
-  #experience { background: var(--cream); }
-  .exp-header {
-    background: var(--navy); border-radius: 12px; padding: 1.5rem 2rem;
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 1.5rem;
+  /* ── SKILLS SECTION ── */
+  .skills { background: var(--light); }
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem; margin-top: 3rem;
   }
-  .exp-role { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: white; }
-  .exp-company { color: var(--sky); font-size: .9rem; margin-top: .2rem; }
-  .exp-date {
-    background: rgba(46,156,202,.2); color: #7dd3f5;
-    padding: .4rem 1rem; border-radius: 20px; font-size: .78rem; font-weight: 500;
+  .skill-group h3 {
+    font-size: .78rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--slate); font-weight: 700; margin-bottom: 1rem;
+    padding-bottom: .5rem; border-bottom: 1px solid var(--border);
   }
-  .exp-table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
-  .exp-table th {
-    background: var(--navy); color: rgba(255,255,255,.7);
-    padding: 1rem 1.4rem; text-align: left; font-size: .75rem;
-    font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  .skill-tags { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .tag {
+    background: var(--white); border: 1px solid var(--border);
+    color: var(--navy); font-size: .8rem; padding: .3rem .75rem; border-radius: 99px;
   }
-  .exp-table td {
-    padding: 1rem 1.4rem; font-size: .87rem; vertical-align: top;
-    border-bottom: 1px solid var(--sand); color: var(--muted); line-height: 1.6;
-  }
-  .exp-table tr:last-child td { border-bottom: none; }
-  .exp-table tr:hover td { background: #f0f7fc; }
-  .exp-table td:first-child { font-weight: 600; color: var(--text); white-space: nowrap; }
-  .exp-table td:last-child { color: var(--teal); font-weight: 500; }
+  .tag.highlight { background: var(--navy); color: var(--gold); border-color: var(--navy); }
 
-  /* ── WHY HIRE ── */
-  #why { background: var(--navy); }
-  #why .section-title { color: white; }
-  #why .section-label::before { background: var(--sky); }
-  .why-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.2rem; }
-  .why-card {
-    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
-    border-radius: 12px; padding: 1.8rem;
-    transition: background .2s, transform .2s;
+  /* ── TRUST SECTION ── */
+  .trust { background: #F0F2F5; }
+  .trust-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem; margin-top: 3rem;
   }
-  .why-card:hover { background: rgba(255,255,255,.08); transform: translateY(-2px); }
-  .why-card-top { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
-  .why-num {
-    width: 40px; height: 40px; border-radius: 8px;
-    background: rgba(46,156,202,.2); color: var(--sky);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'DM Serif Display', serif; font-size: 1.2rem;
+  .trust-card {
+    background: var(--white); border-radius: 10px; padding: 1.5rem; text-align: center;
+    border-top: 3px solid var(--green);
   }
-  .why-card h4 { font-size: 1rem; font-weight: 600; color: white; }
-  .why-card p { font-size: .87rem; color: rgba(255,255,255,.55); line-height: 1.7; }
+  .trust-icon { font-size: 1.8rem; margin-bottom: .75rem; }
+  .trust-card h3 { font-size: .9rem; font-weight: 700; color: var(--navy); margin-bottom: .4rem; }
+  .trust-card p { font-size: .82rem; color: var(--slate); line-height: 1.55; }
 
-  /* ── AVAILABILITY ── */
-  #availability { background: var(--cream); }
-  .avail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 3rem; }
-  .avail-card {
-    background: var(--white); border-radius: 12px; padding: 2rem;
-    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  /* ── AWARDS ── */
+  .awards { background: var(--white); }
+  .awards-row {
+    display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 2.5rem;
   }
-  .avail-card h4 {
-    font-size: .75rem; letter-spacing: .14em; text-transform: uppercase;
-    color: var(--sky); margin-bottom: 1.2rem; font-weight: 600;
+  .award-card {
+    flex: 1; min-width: 220px;
+    border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem;
+    display: flex; gap: 1rem; align-items: flex-start;
   }
-  .avail-item {
-    display: flex; align-items: center; gap: .8rem;
-    padding: .55rem 0; border-bottom: 1px solid var(--sand);
-    font-size: .9rem; color: var(--muted);
-  }
-  .avail-item:last-child { border-bottom: none; }
-  .avail-item::before {
-    content: ''; width: 8px; height: 8px; border-radius: 50%;
-    background: var(--teal); flex-shrink: 0;
-  }
+  .award-star { font-size: 1.6rem; flex-shrink: 0; }
+  .award-card h3 { font-size: .95rem; font-weight: 700; color: var(--navy); }
+  .award-card p { font-size: .82rem; color: var(--slate); margin-top: .3rem; line-height: 1.5; }
 
-  /* ── CTA BANNER ── */
-  .cta-banner {
-    background: linear-gradient(135deg, var(--blue) 0%, var(--teal) 100%);
-    border-radius: 16px; padding: 3rem; text-align: center;
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--navy);
+    text-align: center; padding: 5rem 2rem;
   }
-  .cta-banner h3 {
-    font-family: 'DM Serif Display', serif; font-size: 2rem;
-    color: white; margin-bottom: .8rem;
+  .cta-section h2 {
+    font-family: Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: var(--white); margin-bottom: 1rem;
   }
-  .cta-banner p { color: rgba(255,255,255,.8); font-size: .95rem; margin-bottom: 1.8rem; }
-  .cta-banner a {
-    display: inline-block; padding: .9rem 2.2rem;
-    background: white; color: var(--blue); font-weight: 700;
-    border-radius: 6px; text-decoration: none; font-size: .95rem;
-    transition: transform .15s, box-shadow .15s;
-  }
-  .cta-banner a:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.2); }
+  .cta-section h2 em { color: var(--gold); font-style: normal; }
+  .cta-section p { color: #A0AEC0; font-size: 1rem; max-width: 480px; margin: 0 auto 2.5rem; }
+  .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
   /* ── FOOTER ── */
   footer {
-    background: var(--navy); padding: 2rem;
-    text-align: center; color: rgba(255,255,255,.35);
-    font-size: .8rem;
+    background: #080F16; color: #4A5568;
+    text-align: center; padding: 1.5rem; font-size: .82rem;
   }
+  footer a { color: var(--gold); text-decoration: none; }
 
-  /* ── ANIMATIONS ── */
-  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
-  .fade-up.visible { opacity: 1; transform: translateY(0); }
-
-  @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
     .nav-links { display: none; }
-    #hero { grid-template-columns: 1fr; }
-    .hero-left { padding: 3rem 1.5rem 2rem; }
-    .hero-right { padding: 0 1.5rem 3rem; }
-    .about-grid, .services-grid, .why-grid, .avail-grid { grid-template-columns: 1fr; }
-    .tools-grid { grid-template-columns: repeat(3,1fr); }
-    .container { padding: 0 1.5rem; }
-    .exp-table { display: block; overflow-x: auto; }
-    .stats-row { grid-template-columns: repeat(3,1fr); }
-    .exp-header { flex-direction: column; align-items: flex-start; gap: .8rem; }
+    .hero-stats { gap: 1.5rem; }
   }
 </style>
 </head>
@@ -369,343 +254,365 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">Denver C. <span>Andes</span></div>
+  <a class="nav-logo" href="#">Denver Andes</a>
   <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#tools">Tools</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#why">Why Me</a></li>
-    <li><a href="#availability">Availability</a></li>
+    <li><a href="#impact">What I Do For You</a></li>
+    <li><a href="#specialty">Specialty</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#trust">Why Trust Me</a></li>
+    <li><a href="#contact">Work With Me</a></li>
   </ul>
 </nav>
 
 <!-- HERO -->
-<section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-left">
-    <div class="hero-eyebrow">Virtual Assistant</div>
-    <h1 class="hero-name">Denver C.<br/><em>Andes</em></h1>
-    <p class="hero-title"><strong>Healthcare</strong> &amp; <strong>Customer Support</strong> VA<br/>1 Year 5 Months Healthcare BPO Experience</p>
-    <div class="hero-badges">
-      <span class="badge badge-blue">🏆 Top Performing Agent</span>
-      <span class="badge badge-teal">⭐ Top QA Performer</span>
-      <span class="badge badge-white">HIPAA-Aware</span>
-      <span class="badge badge-white">100+ Daily Concerns</span>
-    </div>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Virtual Assistant · Healthcare Specialist</div>
+    <h1>You Focus on Growth.<br/><em>I'll Handle the Rest.</em></h1>
+    <p>I take the tasks that drain your time, bury your attention, and slow your business — and I run them so you never have to think about them again.</p>
     <div class="hero-cta">
-      <a href="mailto:andesdenver01@gmail.com" class="btn-primary">Hire Me</a>
-      <a href="#services" class="btn-outline">View Services</a>
+      <a href="#contact" class="btn-primary">Let's Work Together</a>
+      <a href="#impact" class="btn-outline">See What I Can Do</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">1 yr 7 mos</div>
+        <div class="stat-lbl">VA Experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">2×</div>
+        <div class="stat-lbl">Top Performer Award</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">10+</div>
+        <div class="stat-lbl">Tools & Platforms</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">Zero</div>
+        <div class="stat-lbl">Defect Documentation</div>
+      </div>
     </div>
   </div>
-  <div class="hero-right">
-    <div class="contact-card">
-      <h3>Contact Information</h3>
-      <div class="contact-item">
-        <div class="contact-icon">📧</div>
+</section>
+
+<!-- PAIN -->
+<section class="pain" id="pain">
+  <div class="container">
+    <div class="section-label">The Problem</div>
+    <h2 class="section-title">Sound familiar?</h2>
+    <p class="section-sub">Most business owners and managers hire a VA because something is already breaking. Here's what that looks like before I step in.</p>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="pain-icon">⏳</div>
+        <h3>Your time is disappearing</h3>
+        <p>Hours spent on emails, follow-ups, scheduling, and data entry that should never need your attention.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">📋</div>
+        <h3>Tasks keep falling through</h3>
+        <p>Inquiries go unanswered. Records are incomplete. Things get missed because no one owns the details.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">😓</div>
+        <h3>You're doing everything yourself</h3>
+        <p>You're the owner, manager, and admin all at once — and it's costing you your growth and your energy.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">🔒</div>
+        <h3>You don't trust just anyone with this</h3>
+        <p>Sensitive client data, private records, confidential communication — handing this off feels risky without someone reliable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section class="impact" id="impact">
+  <div class="container">
+    <div class="section-label">What I Do For You</div>
+    <h2 class="section-title">Here's what changes<br/>when you work with me</h2>
+    <p class="section-sub">Every skill I bring has a direct effect on your time, your operations, your peace of mind, and your clients.</p>
+    <div class="impact-grid">
+
+      <div class="impact-card">
+        <div class="impact-top">
+          <div class="impact-emoji">⏱️</div>
+          <div>
+            <h3>Your Time Back</h3>
+            <p>Right now, you're spending hours on tasks that don't need you — they need a system and a person who owns them.</p>
+          </div>
+        </div>
+        <div class="impact-bottom">
+          <div class="result-label">What changes</div>
+          <p>I handle your emails, chat responses, follow-ups, data entry, and coordination — so your calendar only has the work that actually needs you.</p>
+        </div>
+      </div>
+
+      <div class="impact-card">
+        <div class="impact-top">
+          <div class="impact-emoji">📬</div>
+          <div>
+            <h3>No More Missed Messages</h3>
+            <p>Unanswered emails and chats cost you clients, trust, and revenue — even when it's not intentional.</p>
+          </div>
+        </div>
+        <div class="impact-bottom">
+          <div class="result-label">What changes</div>
+          <p>I monitor, respond, and route communications promptly. Your clients always hear back — professionally, accurately, and on time.</p>
+        </div>
+      </div>
+
+      <div class="impact-card">
+        <div class="impact-top">
+          <div class="impact-emoji">📁</div>
+          <div>
+            <h3>Clean, Accurate Records</h3>
+            <p>Incomplete or inconsistent records lead to errors, confusion, and lost time fixing what should have been right the first time.</p>
+          </div>
+        </div>
+        <div class="impact-bottom">
+          <div class="result-label">What changes</div>
+          <p>I document every interaction with precision. Your CRM, EHR, or tracking sheets stay updated, organized, and audit-ready.</p>
+        </div>
+      </div>
+
+      <div class="impact-card">
+        <div class="impact-top">
+          <div class="impact-emoji">🤝</div>
+          <div>
+            <h3>Clients Feel Taken Care Of</h3>
+            <p>When clients feel ignored or passed around, they leave — even if your actual service is great.</p>
+          </div>
+        </div>
+        <div class="impact-bottom">
+          <div class="result-label">What changes</div>
+          <p>I handle client-facing coordination with care and clarity. They feel heard, informed, and confident — which keeps them coming back.</p>
+        </div>
+      </div>
+
+      <div class="impact-card">
+        <div class="impact-top">
+          <div class="impact-emoji">🔐</div>
+          <div>
+            <h3>Your Data Is Safe</h3>
+            <p>Giving someone access to sensitive data — client info, records, financials — is a real risk if they're not careful.</p>
+          </div>
+        </div>
+        <div class="impact-bottom">
+          <div class="result-label">What changes</div>
+          <p>I'm trained in HIPAA-compliant practices and apply the same data discipline to every client — not just in healthcare. Privacy is non-negotiable for me.</p>
+        </div>
+      </div>
+
+      <div class="impact-card">
+        <div class="impact-top">
+          <div class="impact-emoji">📈</div>
+          <div>
+            <h3>Your Operations Scale</h3>
+            <p>Growth means more volume, more clients, more admin — and without support, it becomes a bottleneck instead of a win.</p>
+          </div>
+        </div>
+        <div class="impact-bottom">
+          <div class="result-label">What changes</div>
+          <p>I absorb the operational load as your business grows — handling more without you needing to hire more or work more hours.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SPECIALTY -->
+<section class="specialty" id="specialty">
+  <div class="container">
+    <div class="section-label">My Specialty</div>
+    <div class="specialty-badge">⚕️ Healthcare Operations</div>
+    <h2 class="section-title" style="color:#fff;">Where I go deeper<br/>than most VAs</h2>
+    <p class="section-sub">I work across industries — but healthcare is where my experience runs deepest. If you run a clinic, health practice, or health-adjacent business, this is built for you.</p>
+    <div class="spec-grid">
+      <div class="spec-card">
+        <h3>FSA / HSA Coordination</h3>
+        <p>I verify patient eligibility, explain FSA/HSA coverage, and coordinate benefits — reducing confusion and billing delays for your patients and your team.</p>
+      </div>
+      <div class="spec-card">
+        <h3>Patient Outreach via Chat & Email</h3>
+        <p>I reach out to patients professionally through written channels — gathering information, sending follow-ups, and keeping communication moving without dropping the ball.</p>
+      </div>
+      <div class="spec-card">
+        <h3>EHR & CRM Documentation</h3>
+        <p>I update and maintain records in Healthie, Salesforce, Zoho, and similar platforms — accurately, consistently, and on time.</p>
+      </div>
+      <div class="spec-card">
+        <h3>Billing Support</h3>
+        <p>I assist with billing workflows through Chargebee and Stripe — tracking payments, flagging issues, and keeping your financial records clean.</p>
+      </div>
+      <div class="spec-card">
+        <h3>HIPAA-Compliant Communication</h3>
+        <p>Patient data is handled with full discretion. Every message, record, and interaction follows privacy best practices — always.</p>
+      </div>
+      <div class="spec-card">
+        <h3>Medication & Care Coordination</h3>
+        <p>I support care workflows through Dosespot and similar tools — connecting patients to the right resources without delays or miscommunication.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <div class="container">
+    <div class="section-label">Skills & Tools</div>
+    <h2 class="section-title">Ready to work from day one</h2>
+    <p class="section-sub">No ramp-up time wasted. I'm already proficient in the tools most teams rely on.</p>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h3>CRM & EHR Platforms</h3>
+        <div class="skill-tags">
+          <span class="tag highlight">Salesforce</span>
+          <span class="tag highlight">Zoho CRM</span>
+          <span class="tag highlight">Zoho Desk</span>
+          <span class="tag highlight">Healthie</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Communication & Support</h3>
+        <div class="skill-tags">
+          <span class="tag">Email Management</span>
+          <span class="tag">Chat Support</span>
+          <span class="tag">Amazon Connect</span>
+          <span class="tag">Client Follow-ups</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Billing & Payments</h3>
+        <div class="skill-tags">
+          <span class="tag highlight">Chargebee</span>
+          <span class="tag highlight">Stripe</span>
+          <span class="tag">Invoice Tracking</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Admin & Productivity</h3>
+        <div class="skill-tags">
+          <span class="tag">Google Workspace</span>
+          <span class="tag">Google Sheets</span>
+          <span class="tag">MS Office</span>
+          <span class="tag">Data Entry</span>
+          <span class="tag">Scheduling</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Healthcare-Specific</h3>
+        <div class="skill-tags">
+          <span class="tag highlight">FSA/HSA Verification</span>
+          <span class="tag highlight">Dosespot</span>
+          <span class="tag highlight">HIPAA Compliance</span>
+          <span class="tag">Patient Coordination</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Core VA Skills</h3>
+        <div class="skill-tags">
+          <span class="tag">Record Accuracy</span>
+          <span class="tag">Task Routing</span>
+          <span class="tag">Quality Assurance</span>
+          <span class="tag">Documentation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="trust" id="trust">
+  <div class="container">
+    <div class="section-label">Why Trust Me</div>
+    <h2 class="section-title">What you can count on</h2>
+    <p class="section-sub">Skills are easy to list. Here's what actually matters when someone is working inside your business.</p>
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="trust-icon">🎯</div>
+        <h3>Accuracy First</h3>
+        <p>I was recognized as Top QA Performer for a reason. I don't rush — I get it right, and I double-check it stays right.</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">🔒</div>
+        <h3>Discretion Always</h3>
+        <p>I handle sensitive client data daily. Confidentiality isn't a policy for me — it's a habit built over years of healthcare work.</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">💬</div>
+        <h3>Clear Communication</h3>
+        <p>You'll always know what I'm working on, when it's done, and if something needs your attention. No guessing, no chasing.</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">⚡</div>
+        <h3>Self-Starter</h3>
+        <p>I don't need hand-holding to begin. Give me the process and the tools — I'll own the execution and improve it along the way.</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">📊</div>
+        <h3>Results You Can See</h3>
+        <p>I track what I do, document what matters, and keep your records in a state where you can always see what's happening.</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">🌏</div>
+        <h3>Remote-Ready</h3>
+        <p>I've worked fully remote supporting US-based clients since day one. Time zones, async work, digital tools — all second nature.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section class="awards">
+  <div class="container">
+    <div class="section-label">Recognition</div>
+    <h2 class="section-title">Proven performance,<br/>not just promises</h2>
+    <div class="awards-row">
+      <div class="award-card">
+        <div class="award-star">🏆</div>
         <div>
-          <div class="contact-label">Email</div>
-          <div class="contact-value"><a href="mailto:andesdenver01@gmail.com">andesdenver01@gmail.com</a></div>
+          <h3>Top Performing Agent</h3>
+          <p>Awarded at NextVAs for consistently exceeding outreach KPIs, response accuracy, and client coordination targets.</p>
         </div>
       </div>
-      <div class="contact-item">
-        <div class="contact-icon">📱</div>
+      <div class="award-card">
+        <div class="award-star">✅</div>
         <div>
-          <div class="contact-label">Phone</div>
-          <div class="contact-value">+63 995 163 3721</div>
+          <h3>Top QA Performer</h3>
+          <p>Recognized for zero-defect documentation and HIPAA-compliant record handling across all patient interactions.</p>
         </div>
       </div>
-      <div class="contact-item">
-        <div class="contact-icon">💼</div>
+      <div class="award-card">
+        <div class="award-star">🎓</div>
         <div>
-          <div class="contact-label">LinkedIn</div>
-          <div class="contact-value"><a href="https://www.linkedin.com/in/denver-andes-7b8025409" target="_blank">linkedin.com/in/denver-andes</a></div>
+          <h3>B.S. Information Systems</h3>
+          <p>CARD MRI Development Institute Inc., 2023 — giving me a structured, technical foundation behind every VA task I do.</p>
         </div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-icon">🎥</div>
-        <div>
-          <div class="contact-label">Zoom/Google Meet</div>
-          <div class="contact-value">Available on request</div>
-        </div>
-      </div>
-    </div>
-    <div class="stats-row">
-      <div class="stat">
-        <div class="stat-num">100+</div>
-        <div class="stat-label">Daily Concerns</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">100%+</div>
-        <div class="stat-label">QA Accuracy</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">12+</div>
-        <div class="stat-label">Tools Used</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about">
+<!-- CTA -->
+<section class="cta-section" id="contact">
   <div class="container">
-    <div class="section-label">Who I Am</div>
-    <h2 class="section-title">About <span>Me</span></h2>
-    <div class="about-grid fade-up">
-      <div class="about-aside">
-        <h4>Key Highlights</h4>
-        <div class="about-highlight">
-          <div class="ah-icon">🏆</div>
-          <div>
-            <div class="ah-title">Top Performing Agent</div>
-            <div class="ah-desc">Consistently exceeded targets in a high-volume healthcare call center</div>
-          </div>
-        </div>
-        <div class="about-highlight">
-          <div class="ah-icon">⭐</div>
-          <div>
-            <div class="ah-title">Top QA Performer</div>
-            <div class="ah-desc">Highest quality assurance scores on calls and documentation accuracy</div>
-          </div>
-        </div>
-        <div class="about-highlight">
-          <div class="ah-icon">💪</div>
-          <div>
-            <div class="ah-title">100+ Daily Concerns</div>
-            <div class="ah-desc">Handled with accuracy, speed, and professionalism every single day</div>
-          </div>
-        </div>
-        <div class="about-highlight">
-          <div class="ah-icon">🔒</div>
-          <div>
-            <div class="ah-title">HIPAA-Aware</div>
-            <div class="ah-desc">Trained in patient data privacy and compliance protocols</div>
-          </div>
-        </div>
-      </div>
-      <div class="about-text">
-        <p>I am <strong>Denver C. Andes</strong>, a results-driven Virtual Assistant with <strong>1 year and 5 months</strong> of hands-on experience in a healthcare call center environment.</p>
-        <p>I have handled over <strong>100 patient and client concerns daily</strong> — from appointment scheduling and outbound follow-ups to insurance coordination and complaint resolution.</p>
-        <p>Recognized as a <strong>Top Performing Agent</strong> and <strong>Top QA Performer</strong> at NextVAs, I bring a proven track record of accuracy, professionalism, and compassionate service.</p>
-        <p>I am now ready to bring these skills to remote clients who need a reliable, HIPAA-aware VA who can hit the ground running — no learning curve needed.</p>
-      </div>
+    <h2>Ready to get your<br/><em>time and focus back?</em></h2>
+    <p>Let's talk about what's on your plate and how I can take it off — starting this week.</p>
+    <div class="cta-buttons">
+      <a href="mailto:denverandes01@gmail.com" class="btn-primary">Email Me</a>
+      <a href="https://www.linkedin.com/in/denver-andes-7b8025409" class="btn-outline" target="_blank">Connect on LinkedIn</a>
     </div>
-  </div>
-</section>
-
-<!-- SERVICES -->
-<section id="services">
-  <div class="container">
-    <div class="section-label">What I Do</div>
-    <h2 class="section-title">Services <span>I Offer</span></h2>
-    <div class="services-grid fade-up">
-      <div class="service-card">
-        <div class="service-card-header blue">
-          <div class="service-icon">🏥</div>
-          <div>
-            <div class="service-card-title">Healthcare Virtual Assistant</div>
-            <div class="service-card-sub">Medical admin & patient coordination</div>
-          </div>
-        </div>
-        <ul class="service-list">
-          <li>Appointment scheduling &amp; reminders</li>
-          <li>Outbound calls — follow-ups &amp; collections</li>
-          <li>Patient intake &amp; document collection</li>
-          <li>EHR / EMR data entry &amp; updates</li>
-          <li>Coordinating with medical staff</li>
-          <li>HIPAA-compliant email communication</li>
-          <li>Prior auth &amp; referral follow-up</li>
-        </ul>
-      </div>
-      <div class="service-card">
-        <div class="service-card-header teal">
-          <div class="service-icon">💬</div>
-          <div>
-            <div class="service-card-title">Customer Support VA</div>
-            <div class="service-card-sub">Client communication & CRM management</div>
-          </div>
-        </div>
-        <ul class="service-list">
-          <li>Outbound call handling</li>
-          <li>Email management &amp; response drafting</li>
-          <li>CRM updates (Zoho Desk)</li>
-          <li>Complaint handling &amp; escalation</li>
-          <li>Ticket creation &amp; resolution tracking</li>
-          <li>Client onboarding support</li>
-          <li>Billing inquiries (Chargebee / Stripe)</li>
-          <li>Reports &amp; summary documentation</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TOOLS -->
-<section id="tools">
-  <div class="container">
-    <div class="section-label">Tech Stack</div>
-    <h2 class="section-title">Tools I've <span>Actually Used</span></h2>
-    <div class="tools-grid fade-up">
-      <div class="tool-chip"><div class="tool-dot"></div>ZOHO CRM</div>
-      <div class="tool-chip"><div class="tool-dot"></div>Zoho Desk</div>
-      <div class="tool-chip"><div class="tool-dot"></div>Microsoft Office</div>
-      <div class="tool-chip"><div class="tool-dot"></div>Google Workspace</div>
-      <div class="tool-chip"><div class="tool-dot"></div>Amazon Connect</div>
-      <div class="tool-chip"><div class="tool-dot"></div>Slack</div>
-      <div class="tool-chip"><div class="tool-dot"></div>Chargebee</div>
-      <div class="tool-chip"><div class="tool-dot"></div>Stripe</div>
-      <div class="tool-chip"><div class="tool-dot"></div>Healthie</div>
-      <div class="tool-chip"><div class="tool-dot"></div>Dosespot</div>
-      <div class="tool-chip"><div class="tool-dot"></div>Photon</div>
-      <div class="tool-chip"><div class="tool-dot"></div>Telescope</div>
-    </div>
-  </div>
-</section>
-
-<!-- EXPERIENCE -->
-<section id="experience">
-  <div class="container">
-    <div class="section-label">Track Record</div>
-    <h2 class="section-title">Work <span>Experience</span></h2>
-    <div class="exp-header fade-up">
-      <div>
-        <div class="exp-role">Healthcare Call Center Agent</div>
-        <div class="exp-company">NextVAs</div>
-      </div>
-      <div class="exp-date">Nov. 27, 2024 – Present</div>
-    </div>
-    <div class="fade-up">
-      <table class="exp-table">
-        <thead>
-          <tr>
-            <th>Task</th>
-            <th>What I Did</th>
-            <th>Result / Output</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Appointment Scheduling</td>
-            <td>Managed outbound calls to schedule, confirm, and reschedule patient appointments using Healthie and EHR systems</td>
-            <td>Reduced no-show rate through proactive reminder calls</td>
-          </tr>
-          <tr>
-            <td>Outbound Follow-ups</td>
-            <td>Conducted outbound calls for appointment reminders, lab result follow-ups, and document/info requests from patients</td>
-            <td>Maintained accurate call logs and follow-up records daily</td>
-          </tr>
-          <tr>
-            <td>Collections Calls</td>
-            <td>Performed outbound collections calls professionally, explaining balances and setting up payment arrangements via Chargebee and Stripe</td>
-            <td>Maintained patient relationships while recovering outstanding balances</td>
-          </tr>
-          <tr>
-            <td>Complaint Handling</td>
-            <td>Resolved patient and client escalations with empathy and efficiency; logged all cases in Zoho Desk and Salesforce CRM</td>
-            <td>Consistently achieved high QA scores on escalation handling</td>
-          </tr>
-          <tr>
-            <td>Insurance Coordination</td>
-            <td>Verified insurance eligibility and communicated with providers to obtain prior authorizations and referrals</td>
-            <td>Ensured smooth billing flow and minimized claim denials</td>
-          </tr>
-          <tr>
-            <td>Data Entry & Records</td>
-            <td>Updated patient records, medication info (Dosespot), and billing details accurately across multiple platforms</td>
-            <td>Maintained 100%+ data accuracy in QA reviews</td>
-          </tr>
-          <tr>
-            <td>Email Communication</td>
-            <td>Drafted and sent professional emails to patients for appointment confirmations, document requests, and care instructions</td>
-            <td>Maintained HIPAA-compliant communication at all times</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- WHY HIRE ME -->
-<section id="why">
-  <div class="container">
-    <div class="section-label">Why Choose Me</div>
-    <h2 class="section-title">Why Hire <span style="color:var(--sky)">Denver</span></h2>
-    <div class="why-grid fade-up">
-      <div class="why-card">
-        <div class="why-card-top">
-          <div class="why-num">01</div>
-          <h4>Proven Track Record</h4>
-        </div>
-        <p>Not just experience — recognized as Top Agent and Top QA Performer in a competitive healthcare BPO environment. Awards backed by numbers.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-card-top">
-          <div class="why-num">02</div>
-          <h4>Real Healthcare Tools</h4>
-        </div>
-        <p>I have actually used Healthie, Dosespot, Chargebee, Stripe, Amazon Connect, and more — no onboarding delay, no learning curve needed.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-card-top">
-          <div class="why-num">03</div>
-          <h4>High Volume Capacity</h4>
-        </div>
-        <p>Handled 100+ concerns daily without sacrificing quality. I thrive in fast-paced, detail-oriented environments where accuracy matters.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-card-top">
-          <div class="why-num">04</div>
-          <h4>HIPAA-Aware & Reliable</h4>
-        </div>
-        <p>Trained in HIPAA compliance and patient data privacy. You can trust me with sensitive healthcare information and confidential records.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- AVAILABILITY -->
-<section id="availability">
-  <div class="container">
-    <div class="section-label">Let's Connect</div>
-    <h2 class="section-title">Availability <span>&amp; Rates</span></h2>
-    <div class="avail-grid fade-up">
-      <div class="avail-card">
-        <h4>Availability</h4>
-        <div class="avail-item">Full-time (40 hrs/week)</div>
-        <div class="avail-item">Timezone: Philippine Standard Time (PST+8)</div>
-        <div class="avail-item">Flexible schedule to match client timezone</div>
-      </div>
-      <div class="avail-card">
-        <h4>Rates</h4>
-        <div class="avail-item">Hourly: Negotiable based on scope</div>
-        <div class="avail-item">Project-based: Open to discussion</div>
-        <div class="avail-item">Open to long-term contracts</div>
-        <div class="avail-item">Trial task available upon request</div>
-      </div>
-    </div>
-    <div class="cta-banner fade-up">
-      <h3>Ready to Work Together?</h3>
-      <p>I respond within 24 hours. Let's schedule a discovery call or I can complete a trial task to show you what I can do.</p>
-      <a href="mailto:andesdenver01@gmail.com">📧 Email Me Now</a>
-    </div>
+    <p style="margin-top:2rem; font-size:.82rem; color:#4A5568;">
+      Based in Bay, Laguna, Philippines &nbsp;·&nbsp; Available for remote work &nbsp;·&nbsp; Open to long-term clients
+    </p>
   </div>
 </section>
 
 <footer>
-  <p>© 2026 Denver C. Andes · Virtual Assistant · andesdenver01@gmail.com</p>
+  <p>© 2026 Denver Andes &nbsp;·&nbsp; <a href="https://denverandes01.github.io/portfolio">denverandes01.github.io/portfolio</a></p>
 </footer>
 
-<script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-      }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-</script>
 </body>
 </html>
